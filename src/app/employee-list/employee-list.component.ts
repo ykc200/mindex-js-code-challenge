@@ -25,6 +25,14 @@ export class EmployeeListComponent implements OnInit {
       ).subscribe();
   }
 
+  onEdit(employee) {
+    this.employeeService.save(employee);
+  }
+
+  onDelete(employee) {
+    this.employeeService.remove(employee);
+  }
+
   private handleError(e: Error | any): string {
     console.error(e);
     return this.errorMessage = e.message || 'Unable to retrieve employees';

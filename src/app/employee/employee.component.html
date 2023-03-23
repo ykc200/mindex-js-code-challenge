@@ -10,4 +10,17 @@
       <dd>{{employee.position}}</dd>
     </dl>
   </mat-card-content>
+  <mat-card-content *ngIf="directReportArray.length !== 0">
+    <mat-list>
+      <mat-list-item *ngFor="let e of directReportArray">
+        <p matListItemTitle>{{e.lastName}}, {{e.firstName}}</p>
+        <button mat-icon-button (click)="onEditClick(e)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="onDeleteClick(e)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
 </mat-card>

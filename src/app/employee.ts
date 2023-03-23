@@ -3,6 +3,6 @@ export class Employee {
   firstName: string;
   lastName: string;
   position: string;
-  compensation: number;
+  compensation?: number;
   directReports?: Array<number>;
 }

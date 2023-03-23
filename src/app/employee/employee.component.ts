@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 
 import {Employee} from '../employee';
 import {EmployeeService} from '../employee.service';
@@ -10,7 +10,11 @@ import {EmployeeService} from '../employee.service';
 })
 export class EmployeeComponent {
   @Input() employee: Employee;
-  reportArray: Array<number>;
+  @Output() edit: EventEmitter<any> = new EventEmitter();
+  @Output() delete: EventEmitter<any> = new EventEmitter();
+  reportArray: Array<Employee>;
+  directReportArray: Array<Employee>;
+
 
   constructor(private employeeService: EmployeeService) {
   }
@@ -19,19 +23,43 @@ export class EmployeeComponent {
    * Recursion method to find all direct and indirect reports of the given employee 
    * @param employee The employee to be queried 
    */
-  getReports(employee: Employee) {
+  getAllReports(employee: Employee) {
     if (employee.directReports !== undefined){
       employee.directReports.forEach(eId => {
-        //console.log("Currently On: " + this.employee.firstName + "'s: " + eId)
-        this.reportArray.push(eId)
-        this.employeeService.get(eId).subscribe(e => this.getReports(e));
+        this.employeeService.get(eId).subscribe(e => {
+          this.getAllReports(e);
+          this.reportArray.push(e);
+        });
       });
+    }
+  }
+  
+  /**
+   * Find all direct reports of the given employee 
+   * @param employee The employee to be queried 
+   */
+  getDirectReports(employee: Employee) {
+    if (employee.directReports !== undefined){
+      employee.directReports.forEach(eId => {
+        this.employeeService.get(eId).subscribe(e => {
+          this.directReportArray.push(e);
+        })
+      })
     }
   }
 
   ngOnInit() {
     this.reportArray = [];
-    this.getReports(this.employee);
-    console.log(this.reportArray);
+    this.directReportArray = [];
+    this.getAllReports(this.employee);
+    this.getDirectReports(this.employee);
+  }
+
+  onEditClick(employee: Employee) {
+    this.edit.emit(employee);
+  }
+
+  onDeleteClick(employee: Employee) {
+    this.delete.emit(employee);
   }
 }
