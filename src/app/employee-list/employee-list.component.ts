@@ -26,11 +26,11 @@ export class EmployeeListComponent implements OnInit {
   }
 
   onEdit(employee) {
-    this.employeeService.save(employee);
+    this.employeeService.save(employee).subscribe();
   }
 
   onDelete(employee) {
-    this.employeeService.remove(employee);
+    this.employeeService.remove(employee).subscribe();
   }
 
   private handleError(e: Error | any): string {

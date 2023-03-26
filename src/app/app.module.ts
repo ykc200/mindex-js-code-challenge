@@ -17,12 +17,16 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 
 import {MatListModule} from '@angular/material/list';
+import {MatDialogModule} from '@angular/material/dialog';
+import {ReactiveFormsModule} from '@angular/forms'
+import {EmployeeDialogComponent} from './employee-dialog/employee-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EmployeeComponent,
-    EmployeeListComponent
+    EmployeeListComponent,
+    EmployeeDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +46,9 @@ import {MatListModule} from '@angular/material/list';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule,
+    ReactiveFormsModule
   ],
   providers: [EmployeeService],
   bootstrap: [AppComponent]

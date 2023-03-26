@@ -1,14 +1,17 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input, OnInit ,Output, EventEmitter} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
 
 import {Employee} from '../employee';
-import {EmployeeService} from '../employee.service';
+import {EmployeeService, ACTION_TYPE} from '../employee.service';
+
+import {EmployeeDialogComponent} from '../employee-dialog/employee-dialog.component';
 
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.css']
 })
-export class EmployeeComponent {
+export class EmployeeComponent implements OnInit{
   @Input() employee: Employee;
   @Output() edit: EventEmitter<any> = new EventEmitter();
   @Output() delete: EventEmitter<any> = new EventEmitter();
@@ -16,7 +19,7 @@ export class EmployeeComponent {
   directReportArray: Array<Employee>;
 
 
-  constructor(private employeeService: EmployeeService) {
+  constructor(private employeeService: EmployeeService, public dialog: MatDialog) {
   }
 
   /**
@@ -55,11 +58,37 @@ export class EmployeeComponent {
     this.getDirectReports(this.employee);
   }
 
+  
   onEditClick(employee: Employee) {
-    this.edit.emit(employee);
+    const dialogRef = this.dialog.open(EmployeeDialogComponent, {
+      width: '300px',
+      data: {
+        employee: employee,
+        type: ACTION_TYPE.UPDATE,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((data) => {
+      if (data !== undefined) {
+        this.edit.emit(data);
+      }
+    });
   }
+  
 
   onDeleteClick(employee: Employee) {
-    this.delete.emit(employee);
+    const dialogRef = this.dialog.open(EmployeeDialogComponent, {
+      width: '300px',
+      data: {
+        employee: employee,
+        type: ACTION_TYPE.DELETE,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((data) => {
+      if (data !== undefined) {
+        this.delete.emit(data);
+      }
+    });
   }
 }

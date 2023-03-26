@@ -5,6 +5,13 @@ import {catchError, flatMap} from 'rxjs/operators';
 
 import {Employee} from './employee';
 
+export const enum ACTION_TYPE {
+  CREATE,
+  READ,
+  UPDATE,
+  DELETE
+}
+
 @Injectable()
 export class EmployeeService {
   private url = '/api/employees';
