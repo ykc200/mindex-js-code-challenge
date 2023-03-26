@@ -57,7 +57,6 @@ export class EmployeeComponent implements OnInit{
     this.getAllReports(this.employee);
     this.getDirectReports(this.employee);
   }
-
   
   onEditClick(employee: Employee) {
     const dialogRef = this.dialog.open(EmployeeDialogComponent, {

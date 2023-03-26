@@ -7,7 +7,7 @@ import {EmployeeService} from '../employee.service';
 @Component({
   selector: 'app-employee-list',
   templateUrl: './employee-list.component.html',
-  styleUrls: ['./employee-list.component.css']
+  styleUrls: ['./employee-list.component.css'],
 })
 export class EmployeeListComponent implements OnInit {
   employees: Employee[] = [];
@@ -16,7 +16,7 @@ export class EmployeeListComponent implements OnInit {
   constructor(private employeeService: EmployeeService) {
   }
 
-  ngOnInit(): void {
+  refresh(): void {
     this.employeeService.getAll()
       .pipe(
         reduce((emps, e: Employee) => emps.concat(e), []),
@@ -25,12 +25,18 @@ export class EmployeeListComponent implements OnInit {
       ).subscribe();
   }
 
-  onEdit(employee) {
-    this.employeeService.save(employee).subscribe();
+  ngOnInit(): void {
+    this.refresh();
   }
 
-  onDelete(employee) {
+  onEdit(employee): void {
+    this.employeeService.save(employee).subscribe();
+    this.refresh();
+  }
+
+  onDelete(employee): void {
     this.employeeService.remove(employee).subscribe();
+    this.refresh();
   }
 
   private handleError(e: Error | any): string {
