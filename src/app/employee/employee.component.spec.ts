@@ -1,7 +1,13 @@
 import {async, TestBed} from '@angular/core/testing';
 import {Component} from '@angular/core';
+import {HttpClientModule} from '@angular/common/http';
+import {BackendlessMockService} from '../backendless-mock.service';
+import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
+import {MatDialogModule} from '@angular/material/dialog';
+import {EmployeeService} from '../employee.service';
 
 import {EmployeeComponent} from './employee.component';
+
 
 @Component({selector: 'app-mat-card', template: ''})
 class CardComponent {
@@ -36,6 +42,20 @@ describe('EmployeeComponent', () => {
         CardSubtitleComponent,
         CardContentComponent
       ],
+      imports: [
+        HttpClientModule,
+        HttpClientInMemoryWebApiModule.forRoot(BackendlessMockService, {
+          apiBase: 'api/',
+          delay: 250,
+          passThruUnknownUrl: true,
+          post204: false,
+          put204: false
+        }),
+        MatDialogModule,
+      ],
+      providers: [
+        EmployeeService,
+      ]
     }).compileComponents();
   }));
 

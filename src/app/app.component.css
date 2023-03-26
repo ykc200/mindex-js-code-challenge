@@ -1,4 +1,16 @@
-.page-title {
+.page-title, p {
   text-align: center;
+  color: #1A237E;
+}
+
+a:link {
+  color: #E91E63;
+}
+
+a:link:active, a:visited:active, a:visited {
+  color: #F48FB1;
+}
+
+* {
   font-family: 'Roboto', "Helvetica Neue", sans-serif;
 }
