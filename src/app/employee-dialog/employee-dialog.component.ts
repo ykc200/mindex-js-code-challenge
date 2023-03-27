@@ -34,6 +34,7 @@ export class EmployeeDialogComponent implements OnInit {
                 firstName: [this.employee.firstName, Validators.required],
                 position: [this.employee.position, Validators.required],
                 compensation: [this.employee.compensation ? this.employee.compensation : null, Validators.required],
+                directReports: [this.employee.directReports ? this.employee.directReports : []],
             });
         }
     }
